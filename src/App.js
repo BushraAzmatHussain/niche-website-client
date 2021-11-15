@@ -1,23 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { Route, Switch } from "react-router";
+import { BrowserRouter } from "react-router-dom";
+import "./App.css";
+import Dashboard from "./Components/Dashboard/Dashboard";
+import Explore from "./Components/Explore/Explore";
+import Home from "./Components/Home/Home";
+import Login from "./Components/Login/Login";
+import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
+import Purchase from "./Components/Purchase/Purchase";
+import Register from "./Components/Register/Register";
+import AuthProvider from "./context/AuthProvider";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <AuthProvider>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/home">
+              <Home />
+            </Route>
+            <Route exact path="/explore">
+              <Explore />
+            </Route>
+            <Route exact path="/register">
+              <Register />
+            </Route>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <PrivateRoute path="/dashboard">
+              <Dashboard />
+            </PrivateRoute>
+            {/* <PrivateRoute exact path="/dashboard/payment">
+              <Payment />
+            </PrivateRoute> */}
+            <PrivateRoute exact path="/purchase/:carID">
+              <Purchase />
+            </PrivateRoute>
+          </Switch>
+        </BrowserRouter>
+      </AuthProvider>
     </div>
   );
 }
